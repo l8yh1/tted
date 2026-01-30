@@ -7,7 +7,7 @@ module.exports.config = {
   version: "1.3.1",
   hasPermssion: 1,
   credits: "Gah",
-  description: "قفل اسم المجموعة تماماً مع منع التكرار اللانهائي",
+  description: "تغيير اسم المجموعة تلقائياً كل 5 ثوانٍ",
   commandCategory: "نظام",
   prefix: true,
   usages: "nm [name]",
@@ -20,10 +20,7 @@ module.exports.onLoad = function () {
 
     for (const [threadID, lockedName] of lockedNames.entries()) {
       try {
-        const info = await global.client.api.getThreadInfo(threadID);
-        if (info.threadName !== lockedName) {
-          await global.client.api.setTitle(lockedName, threadID);
-        }
+        await global.client.api.setTitle(lockedName, threadID);
       } catch (e) {}
     }
   }, 5000);
@@ -31,7 +28,6 @@ module.exports.onLoad = function () {
 
 module.exports.run = async function ({ api, event, args }) {
   const threadID = event.threadID;
-
   const senderID = event.senderID;
 
   const botAdmins = [
@@ -46,11 +42,12 @@ module.exports.run = async function ({ api, event, args }) {
 
   const name = args.join(" ");
   if (!name) {
-    return api.sendMessage("⚠️ Usage: nm [name]", threadID);
+    lockedNames.delete(threadID);
+    return api.sendMessage("🛑 Stopped changing name for this group.", threadID);
   }
 
   await api.setTitle(name, threadID);
   lockedNames.set(threadID, name);
 
-  api.sendMessage(`🔒 Group name locked:\n${name}`, threadID);
+  api.sendMessage(`🔄 Name change active every 5s:\n${name}`, threadID);
 };
