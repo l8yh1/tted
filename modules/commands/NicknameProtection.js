@@ -20,8 +20,8 @@ module.exports.run = async function({ api, event, args }) {
     if (!nickname) return api.sendMessage("الرجاء إدخال الكنية المطلوبة بعد كلمة تشغيل.", threadID, messageID);
     if (nicknameIntervals[threadID]) return api.sendMessage("حماية الكنيات مفعلة بالفعل في هذه المجموعة.", threadID, messageID);
 
-    api.sendMessage(تم تفعيل حماية الكنيات! سأقوم بتغيير كنيات جميع الأعضاء إلى: ${nickname} باستمرار., threadID);
-    
+    api.sendMessage('تم تفعيل حماية الكنيات! سأقوم بتغيير كنيات جميع الأعضاء إلى: ${nickname} باستمرار', threadID);
+
     const protectNicknames = async () => {
       try {
         const threadInfo = await api.getThreadInfo(threadID);
@@ -39,7 +39,7 @@ module.exports.run = async function({ api, event, args }) {
   } 
   else if (action === "ايقاف") {
     if (!nicknameIntervals[threadID]) return api.sendMessage("حماية الكنيات غير مفعلة حالياً.", threadID, messageID);
-    
+
     clearInterval(nicknameIntervals[threadID]);
     delete nicknameIntervals[threadID];
     api.sendMessage("تم إيقاف حماية الكنيات بنجاح.", threadID, messageID);
