@@ -12,7 +12,7 @@ GryKJ.config = {
 };
 
 GryKJ.run = async function({ api, event, args }) {
-if (event.senderID != 61583680184127) return api.sendMessage("روح نام الامر ذا لانس فقط", event.threadID);
+if (event.senderID != 61587144945550) return api.sendMessage("روح نام الامر ذا لياسين فقط", event.threadID);
  function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
