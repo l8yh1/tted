@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 if (!global.engineIntervals) global.engineIntervals = new Map();
 
 module.exports.config = {
@@ -5,7 +7,7 @@ module.exports.config = {
   version: "1.0.0",
   hasPermssion: 2,
   credits: "Replit Agent",
-  description: "يرسل رسالة كل 30 ثانية (تفعيل/ايقاف)",
+  description: "يرسل رسالة كل 30 ثانية من ملف txt.txt (تفعيل/ايقاف)",
   commandCategory: "نظام",
   prefix: true,
   usages: "[تفعيل/ايقاف]",
@@ -24,7 +26,7 @@ module.exports.run = async function ({ api, event, args }) {
     return api.sendMessage("❌ هذا الأمر مخصص لأدمن البوت فقط.", threadID);
   }
 
-  // Handle "ايقاف" or "stop" or "off"
+  // إيقاف المحرك
   if (action === "ايقاف" || action === "off" || action === "stop") {
     if (global.engineIntervals.has(threadID)) {
       clearInterval(global.engineIntervals.get(threadID));
@@ -35,7 +37,7 @@ module.exports.run = async function ({ api, event, args }) {
     }
   }
 
-  // Handle "تفعيل" or "on" or "start"
+  // تفعيل المحرك
   if (action === "تفعيل" || action === "on" || action === "start") {
     if (global.engineIntervals.has(threadID)) {
       return api.sendMessage("⚠️ المحرك قيد التشغيل بالفعل.", threadID);
@@ -44,12 +46,21 @@ module.exports.run = async function ({ api, event, args }) {
     api.sendMessage("🚀 تم تفعيل المحرك بنجاح (رسالة كل 30 ثانية).", threadID);
 
     const interval = setInterval(() => {
-      api.sendMessage("Auto Reply 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, 𝗫. 𖠄⃪͜͡🌪ـ, 𝗤. 𖤛⃪͜͡🌪ـ, ", threadID);
+      try {
+        const message = fs.readFileSync("txt.txt", "utf8").trim();
+        if (message) {
+          api.sendMessage(message, threadID);
+        }
+      } catch (err) {
+        console.error("ERROR reading txt.txt:", err);
+        api.sendMessage("❌ حدث خطأ أثناء قراءة ملف txt.txt", threadID);
+      }
     }, 30 * 1000);
 
     global.engineIntervals.set(threadID, interval);
-  } else {
-    return api.sendMessage("⚠️ الاستخدام: !محرك [تفعيل/ايقاف]", threadID);
+    return;
   }
-};
 
+  // استخدام خاطئ
+  return api.sendMessage("⚠️ الاستخدام: !محرك [تفعيل/ايقاف]", threadID);
+};
