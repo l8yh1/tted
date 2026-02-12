@@ -11,7 +11,7 @@ module.exports.config = {
 
 const axios = require("axios");
 
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const MODEL = "groq/compound-mini";
 
 const PERSONALITY = {
